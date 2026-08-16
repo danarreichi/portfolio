@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Portfolio of Djatu Hamidan Ardiwinanto — Full Stack Web Developer based in Surabaya, Indonesia." />
+  <meta name="theme-color" content="#090b12" />
+  <title>Djatu Hamidan Ardiwinanto — Full Stack Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="ambient ambient-a" aria-hidden="true"></div>
+  <div class="ambient ambient-b" aria-hidden="true"></div>
+  <div class="ambient ambient-c" aria-hidden="true"></div>
+
+  <div class="custom-cursor" id="customCursor" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <nav class="glass nav-shell" aria-label="Main navigation">
+      <a class="brand" href="#home" aria-label="Djatu home">
+        <span class="brand-mark">D</span>
+        <span class="brand-text">Djatu.</span>
+      </a>
+
+      <div class="nav-links" id="navLinks">
+        <a href="#about" data-i18n="nav.about">About</a>
+        <a href="#experience" data-i18n="nav.experience">Experience</a>
+        <a href="#projects" data-i18n="nav.projects">Projects</a>
+        <a href="#contact" data-i18n="nav.contact">Contact</a>
+      </div>
+
+      <div class="nav-actions">
+        <div class="language-switcher" role="group" aria-label="Language switcher">
+          <button class="language-btn" type="button" data-lang="en" aria-pressed="true">EN</button>
+          <span class="language-divider" aria-hidden="true"></span>
+          <button class="language-btn" type="button" data-lang="id" aria-pressed="false">ID</button>
+        </div>
+        <button class="icon-btn" id="themeToggle" type="button" aria-label="Toggle theme">
+          <svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A8.2 8.2 0 1 1 11.2 3 6.4 6.4 0 0 0 21 12.8Z"/></svg>
+          <svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"/></svg>
+        </button>
+        <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="Open navigation">
+          <span></span><span></span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero section" id="home">
+      <div class="hero-copy reveal">
+        <div class="eyebrow glass-pill">
+          <span class="status-dot"></span>
+          <span data-i18n="hero.location">Surabaya, Indonesia</span>
+        </div>
+        <h1>
+          <span data-i18n-html="hero.title">Building useful products<br /></span>
+          <span class="gradient-text" data-i18n-html="hero.gradient">from backend to interface.</span>
+        </h1>
+        <p class="hero-description">
+          <span data-i18n-html="hero.description">I'm <strong>Djatu Hamidan Ardiwinanto</strong>, a Full Stack Web Developer focused on dependable backend systems, clean APIs, and maintainable web applications.</span>
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#projects"><span data-i18n="hero.explore">Explore my work</span> <span>↘</span></a>
+          <a class="btn btn-ghost" href="mailto:danar.ardiwinanto@gmail.com"><span data-i18n="hero.talk">Let's talk</span></a>
+        </div>
+
+        <div class="hero-meta">
+          <div>
+            <span class="meta-label" data-i18n="hero.currentRole">Current role</span>
+            <span class="meta-value">Full Stack Web Developer</span>
+          </div>
+          <div>
+            <span class="meta-label" data-i18n="hero.currentCompany">Current company</span>
+            <span class="meta-value">Printsoft</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual reveal" data-delay="100">
+        <div class="glass profile-card tilt-card">
+          <div class="profile-topline">
+            <span data-i18n="profile.label">PROFILE / 2026</span>
+            <span class="signal"><i></i><i></i><i></i></span>
+          </div>
+          <div class="profile-avatar">
+            <img src="assets/djatu-profile.jpg" alt="Portrait of Djatu Hamidan Ardiwinanto" />
+            <div class="avatar-ring"></div>
+          </div>
+          <div class="profile-info">
+            <p class="profile-kicker" data-i18n="profile.role">FULL STACK DEVELOPER</p>
+            <h2>Djatu Hamidan<br />Ardiwinanto</h2>
+            <p>CodeIgniter · Laravel · Django · MySQL · REST APIs</p>
+          </div>
+          <div class="profile-footer">
+            <span data-i18n="profile.backend">Backend-focused</span>
+            <span>•</span>
+            <span data-i18n="profile.systems">Web systems</span>
+          </div>
+        </div>
+
+        <div class="glass floating-chip chip-code">{ REST API }</div>
+        <div class="glass floating-chip chip-db">MySQL</div>
+        <div class="glass floating-chip chip-framework">CI3</div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="section-heading reveal">
+        <span class="section-index">01</span>
+        <div>
+          <p class="section-kicker" data-i18n="about.kicker">About</p>
+          <h2 data-i18n-html="about.title">Systems that stay readable<br />after they grow.</h2>
+        </div>
+      </div>
+
+      <div class="about-grid">
+        <article class="glass content-card about-copy reveal">
+          <p>
+            <span data-i18n="about.p1">My work spans web application development, transactional workflows, internal business tools, database-heavy systems, and API integrations. At Printsoft, I work on software used in printing-business operations including POS, order management, bookkeeping, and reporting.</span>
+          </p>
+          <p>
+            <span data-i18n="about.p2">I also built a reusable internal CodeIgniter 3 query-builder library to help the team write database queries that are cleaner, safer, and easier to maintain.</span>
+          </p>
+        </article>
+
+        <div class="stack-grid reveal" data-delay="100">
+          <article class="glass mini-card">
+            <span class="mini-number">3.78</span>
+            <span class="mini-label" data-i18n="about.gpa">Bachelor GPA / 4.00</span>
+          </article>
+          <article class="glass mini-card">
+            <span class="mini-number">8+</span>
+            <span class="mini-label" data-i18n="about.projects">Projects in portfolio</span>
+          </article>
+          <article class="glass mini-card wide">
+            <span class="mini-label" data-i18n="about.coreStack">Core stack</span>
+            <div class="tag-row">
+              <span>PHP</span><span>CodeIgniter</span><span>Laravel</span><span>Python</span><span>Django</span><span>Node.js</span><span>MySQL</span><span>REST API</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="experience">
+      <div class="section-heading reveal">
+        <span class="section-index">02</span>
+        <div>
+          <p class="section-kicker" data-i18n="experience.kicker">Experience</p>
+          <h2 data-i18n-html="experience.title">From database design<br />to production systems.</h2>
+        </div>
+      </div>
+
+      <div class="timeline">
+        <article class="glass timeline-item reveal">
+          <div class="timeline-date" data-i18n="experience.presentDate">Nov 2024 — Present</div>
+          <div class="timeline-content">
+            <div class="role-head">
+              <div>
+                <h3>Full Stack Web Developer</h3>
+                <p>Printsoft · Surabaya</p>
+              </div>
+              <span class="current-badge" data-i18n="experience.current">CURRENT</span>
+            </div>
+            <ul>
+              <li data-i18n="experience.printsoft1">Develop and maintain web systems for printing-business operations, including POS, order management, bookkeeping, and reporting.</li>
+              <li data-i18n="experience.printsoft2">Build full-stack applications with CodeIgniter and MySQL.</li>
+              <li data-i18n="experience.printsoft3">Designed a reusable internal CI3 query-builder library for cleaner and more maintainable database access.</li>
+              <li data-i18n="experience.printsoft4">Design and implement REST APIs for transactional and operational workflows.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="glass timeline-item reveal">
+          <div class="timeline-date">Mar 2023 — Dec 2023</div>
+          <div class="timeline-content">
+            <div class="role-head">
+              <div>
+                <h3>Junior Backend Developer</h3>
+                <p>Gocement · Surabaya</p>
+              </div>
+            </div>
+            <ul>
+              <li data-i18n="experience.gocement1">Developed, maintained, troubleshot, and improved backend systems handling customer data.</li>
+              <li data-i18n="experience.gocement2">Implemented backend features with focus on speed, robustness, and security.</li>
+              <li data-i18n="experience.gocement3">Integrated Algolia product search and Twilio for 2FA and marketing needs.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="glass timeline-item reveal">
+          <div class="timeline-date">Aug 2021 — Oct 2022</div>
+          <div class="timeline-content">
+            <div class="role-head">
+              <div>
+                <h3 data-i18n="experience.internRole">Software Developer Intern</h3>
+                <p>PT. Bumi Menara Internusa · Surabaya</p>
+              </div>
+            </div>
+            <ul>
+              <li data-i18n="experience.bmi1">Designed database structures using CDM/PDM.</li>
+              <li data-i18n="experience.bmi2">Built an investment monitoring & evaluation system with Python/Django.</li>
+              <li data-i18n="experience.bmi3">Built a seafood warehouse inventory system with Python/Django.</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="glass timeline-item reveal">
+          <div class="timeline-date">Feb 2020 — Jul 2020</div>
+          <div class="timeline-content">
+            <div class="role-head">
+              <div>
+                <h3 data-i18n="experience.labRole">Database Design Lab Assistant</h3>
+                <p>Universitas Dinamika · Surabaya</p>
+              </div>
+            </div>
+            <ul>
+              <li data-i18n="experience.lab1">Assisted lecturers in teaching and guiding students on database-related topics.</li>
+              <li data-i18n="experience.lab2">Helped students solve database questions and acted as liaison between students and lecturers.</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="projects">
+      <div class="section-heading reveal">
+        <span class="section-index">03</span>
+        <div>
+          <p class="section-kicker" data-i18n="projects.kicker">Selected projects</p>
+          <h2 data-i18n-html="projects.title">Things I've designed<br />and shipped.</h2>
+        </div>
+      </div>
+
+      <div class="project-grid">
+        <article class="glass project-card featured github-project reveal">
+          <div class="project-number">01</div>
+          <div class="project-body">
+            <div class="project-tags"><span>Open Source</span><span>PHP</span><span>CodeIgniter 3</span><span>MySQL / SQLite</span></div>
+            <p class="project-eyebrow">github.com/danarreichi</p>
+            <h3>CustomQueryBuilder</h3>
+            <p data-i18n="projects.cqb">A drop-in, backward-compatible extension of CodeIgniter 3 Query Builder with Laravel-inspired eager loading, aggregate subqueries, WHERE EXISTS / WHERE HAS, chunking, and more.</p>
+            <div class="project-meta" data-i18n="projects.cqbMeta">99 documented public methods · 118-test MySQL & SQLite suites</div>
+            <a class="project-source" href="https://github.com/danarreichi/custom-query-builder" target="_blank" rel="noreferrer" aria-label="Open CustomQueryBuilder on GitHub">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C6.48 2 2 6.58 2 12.23c0 4.52 2.87 8.35 6.84 9.7.5.1.68-.22.68-.49 0-.24-.01-1.04-.01-1.88-2.51.47-3.16-.63-3.36-1.2-.11-.29-.6-1.2-1.03-1.44-.35-.2-.85-.7-.01-.71.79-.01 1.35.74 1.54 1.05.9 1.55 2.34 1.11 2.91.84.09-.67.35-1.11.64-1.37-2.22-.26-4.55-1.14-4.55-5.06 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.31.1-2.72 0 0 .84-.27 2.75 1.05A9.35 9.35 0 0 1 12 6.89c.85 0 1.7.12 2.5.35 1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.46.1 2.72.64.72 1.03 1.63 1.03 2.76 0 3.93-2.34 4.8-4.56 5.06.36.32.67.93.67 1.88 0 1.36-.01 2.45-.01 2.79 0 .27.18.6.69.49A10.24 10.24 0 0 0 22 12.23C22 6.58 17.52 2 12 2Z"/></svg>
+              <span data-i18n="projects.github">View on GitHub</span><span aria-hidden="true">↗</span>
+            </a>
+          </div>
+          <div class="project-code-art" aria-hidden="true">
+            <span>with_many()</span>
+            <span>with_count()</span>
+            <span>where_has()</span>
+            <span>chunk()</span>
+          </div>
+        </article>
+
+        <article class="glass project-card reveal">
+          <div class="project-number">02</div>
+          <div class="project-tags"><span>Laravel 10</span><span>MySQL</span><span>REST API</span></div>
+          <h3>POS System</h3>
+          <p data-i18n="projects.pos">A point-of-sale system for sales and inventory management, built to monitor stock and track inventory history efficiently.</p>
+        </article>
+
+        <article class="glass project-card reveal">
+          <div class="project-number">03</div>
+          <div class="project-tags"><span>Laravel 10</span><span>Oracle</span></div>
+          <h3 data-i18n="projects.libraryTitle">Campus Library Visitor Dashboard</h3>
+          <p data-i18n="projects.library">Flexible dashboard showing visitor percentages across study programs, lecturers, staff, and external guests.</p>
+        </article>
+
+        <article class="glass project-card reveal">
+          <div class="project-number">04</div>
+          <div class="project-tags"><span>Ruby on Rails</span><span>WebSocket</span></div>
+          <h3>Realtime Chat App</h3>
+          <p data-i18n="projects.chat">Room-based real-time messaging application implemented with WebSocket and MySQL.</p>
+        </article>
+
+        <article class="glass project-card reveal">
+          <div class="project-number">05</div>
+          <div class="project-tags"><span>Django</span><span>AJAX</span><span>MySQL</span></div>
+          <h3 data-i18n="projects.investmentTitle">Investment Monitoring & Evaluation</h3>
+          <p data-i18n="projects.investment">Tracks target versus realization using the Hanumm Curve / S-Curve method, with investment data refreshed every five seconds.</p>
+        </article>
+
+        <article class="glass project-card reveal">
+          <div class="project-number">06</div>
+          <div class="project-tags"><span>Node.js</span><span>AHP</span><span>MySQL</span></div>
+          <h3 data-i18n="projects.employeeTitle">Employee Recruitment DSS</h3>
+          <p data-i18n="projects.employee">A decision-support system that ranks recruitment recommendations based on selected HR criteria.</p>
+        </article>
+
+        <article class="glass project-card reveal">
+          <div class="project-number">07</div>
+          <div class="project-tags"><span>Laravel</span><span>MySQL</span></div>
+          <h3 data-i18n="projects.guesthouseTitle">Guesthouse Booking System</h3>
+          <p data-i18n="projects.guesthouse">Room availability, booking, and post-stay review workflow built with Laravel and MySQL.</p>
+        </article>
+
+        <article class="glass project-card reveal">
+          <div class="project-number">08</div>
+          <div class="project-tags"><span>PHP</span><span>AHP + SAW</span><span>MySQL</span></div>
+          <h3 data-i18n="projects.laptopTitle">Laptop Purchase DSS</h3>
+          <p data-i18n="projects.laptop">Recommendation system combining AHP and SAW methods to rank laptops from user-selected criteria.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section education-section" id="education">
+      <div class="section-heading reveal">
+        <span class="section-index">04</span>
+        <div>
+          <p class="section-kicker" data-i18n="education.kicker">Education</p>
+          <h2 data-i18n-html="education.title">Foundation in<br />Information Systems.</h2>
+        </div>
+      </div>
+
+      <div class="glass education-card reveal">
+        <div>
+          <span class="education-year">2018 — 2022</span>
+          <h3>Universitas Dinamika</h3>
+          <p data-i18n="education.degree">Bachelor Degree in Sistem Informasi</p>
+        </div>
+        <div class="gpa">
+          <span>GPA</span>
+          <strong>3.78<small>/4.00</small></strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="section contact-section" id="contact">
+      <div class="glass contact-card reveal">
+        <div class="contact-orb" aria-hidden="true"></div>
+        <p class="section-kicker" data-i18n="contact.kicker">Contact</p>
+        <h2 data-i18n-html="contact.title">Have a project or<br />an opportunity in mind?</h2>
+        <p class="contact-copy" data-i18n="contact.copy">Reach me directly by email, WhatsApp, or LinkedIn.</p>
+        <div class="contact-actions">
+          <a class="btn btn-primary" href="mailto:danar.ardiwinanto@gmail.com">danar.ardiwinanto@gmail.com</a>
+          <a class="btn btn-ghost" href="https://linkedin.com/in/danar-ardiwinanto" target="_blank" rel="noreferrer">LinkedIn ↗</a>
+          <a class="btn btn-ghost" href="https://wa.me/6285156646427" target="_blank" rel="noreferrer">WhatsApp ↗</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>© <span id="year"></span> Djatu Hamidan Ardiwinanto</span>
+    <span data-i18n="footer.built">Designed & built with HTML, CSS & JavaScript.</span>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
