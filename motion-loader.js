@@ -44,10 +44,6 @@
          filters cannot reliably sample the page behind the parent on Chrome.
          The actual blur therefore lives on a separate fixed layer appended
          directly to <body>, underneath the menu but above page content. */
-      .nav-shell:has(.nav-links.open){
-        -webkit-backdrop-filter:none!important;
-        backdrop-filter:none!important;
-      }
       .nav-links.open{
         background:transparent!important;
         border:0!important;
