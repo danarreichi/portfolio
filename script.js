@@ -37,8 +37,16 @@ const preferredTheme=matchMedia('(prefers-color-scheme: light)').matches?'light'
 root.dataset.theme=savedTheme||preferredTheme;
 themeToggle?.addEventListener('click',()=>{const next=root.dataset.theme==='dark'?'light':'dark';root.dataset.theme=next;localStorage.setItem('portfolio-theme',next)});
 
+function setActiveNav(id){
+  navAnchors.forEach(link=>link.classList.toggle('active',link.getAttribute('href').slice(1)===id));
+}
+
 menuBtn?.addEventListener('click',()=>{const open=navLinks.classList.toggle('open');menuBtn.setAttribute('aria-expanded',String(open))});
-navAnchors.forEach(a=>a.addEventListener('click',()=>{navLinks.classList.remove('open');menuBtn?.setAttribute('aria-expanded','false')}));
+navAnchors.forEach(a=>a.addEventListener('click',()=>{
+  navLinks.classList.remove('open');
+  menuBtn?.setAttribute('aria-expanded','false');
+  setActiveNav(a.getAttribute('href').slice(1));
+}));
 
 let currentLanguage='en',languageTransitionId=0;
 function applyLanguage(lang){const d=translations[lang]||translations.en;document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.dataset.i18n;if(d[k]!=null)el.textContent=d[k]});document.querySelectorAll('[data-i18n-html]').forEach(el=>{const k=el.dataset.i18nHtml;if(d[k]!=null)el.innerHTML=d[k]});root.lang=lang;localStorage.setItem('portfolio-language',lang);languageButtons.forEach(b=>{const active=b.dataset.lang===lang;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active))});currentLanguage=lang}
@@ -51,8 +59,46 @@ applyLanguage(savedLanguage&&translations[savedLanguage]?savedLanguage:browserLa
 revealItems.forEach(i=>i.style.setProperty('--delay',`${Number(i.dataset.delay||0)}ms`));
 const revealObserver=new IntersectionObserver((entries,obs)=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}}),{threshold:.12,rootMargin:'0px 0px -30px'});
 revealItems.forEach(i=>revealObserver.observe(i));
-const sectionObserver=new IntersectionObserver(entries=>entries.forEach(e=>{if(!e.isIntersecting)return;navAnchors.forEach(link=>link.classList.toggle('active',link.getAttribute('href').slice(1)===e.target.id))}),{threshold:.35,rootMargin:'-20% 0px -45%'});
-sections.forEach(s=>sectionObserver.observe(s));
+
+// Scrollspy based on a fixed viewport marker instead of intersection ratio.
+// This stays reliable even for very tall sections such as Experience and Projects.
+let scrollSpyQueued=false;
+function syncActiveNav(){
+  scrollSpyQueued=false;
+  const marker=Math.min(window.innerHeight*.28,220);
+  let activeId='';
+
+  for(const section of sections){
+    const rect=section.getBoundingClientRect();
+    if(rect.top<=marker&&rect.bottom>marker){
+      activeId=section.id;
+      break;
+    }
+  }
+
+  if(window.scrollY+window.innerHeight>=document.documentElement.scrollHeight-4){
+    activeId='contact';
+  }
+
+  if(navAnchors.some(link=>link.getAttribute('href')===`#${activeId}`)){
+    setActiveNav(activeId);
+  }else{
+    navAnchors.forEach(link=>link.classList.remove('active'));
+  }
+}
+function queueScrollSpy(){
+  if(scrollSpyQueued)return;
+  scrollSpyQueued=true;
+  requestAnimationFrame(syncActiveNav);
+}
+window.addEventListener('scroll',queueScrollSpy,{passive:true});
+window.addEventListener('resize',queueScrollSpy,{passive:true});
+window.addEventListener('hashchange',()=>{
+  const id=location.hash.slice(1);
+  if(navAnchors.some(link=>link.getAttribute('href')===`#${id}`))setActiveNav(id);
+  queueScrollSpy();
+});
+queueScrollSpy();
 
 if(tiltCard&&matchMedia('(pointer:fine)').matches&&!matchMedia('(prefers-reduced-motion: reduce)').matches){tiltCard.addEventListener('pointermove',e=>{const r=tiltCard.getBoundingClientRect(),px=(e.clientX-r.left)/r.width,py=(e.clientY-r.top)/r.height;tiltCard.style.transform=`rotateX(${(0.5-py)*7}deg) rotateY(${(px-.5)*7}deg) translateY(-2px)`});tiltCard.addEventListener('pointerleave',()=>tiltCard.style.transform='rotateX(0deg) rotateY(0deg) translateY(0)')}
 
