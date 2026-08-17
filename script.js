@@ -105,3 +105,5 @@ if(tiltCard&&matchMedia('(pointer:fine)').matches&&!matchMedia('(prefers-reduced
 if(customCursor&&matchMedia('(pointer:fine)').matches&&matchMedia('(hover:hover)').matches){root.classList.add('custom-cursor-enabled');const move=e=>{customCursor.style.transform=`translate3d(${e.clientX}px,${e.clientY}px,0) translate(-50%,-50%)`;customCursor.classList.add('is-visible')};window.addEventListener('pointermove',move,{passive:true});document.addEventListener('pointerover',e=>customCursor.classList.toggle('is-hovering',!!e.target.closest('a,button,[role="button"]')));document.addEventListener('pointerdown',()=>customCursor.classList.add('is-pressed'));document.addEventListener('pointerup',()=>customCursor.classList.remove('is-pressed'));document.addEventListener('mouseleave',()=>customCursor.classList.remove('is-visible'))}
 
 document.getElementById('year').textContent=new Date().getFullYear();
+
+import('./motion-loader.js');
