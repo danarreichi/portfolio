@@ -1,48 +1,117 @@
 (() => {
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reducedMotion) return;
+
+  // Slow ambient background motion.
   const style = document.createElement('style');
   style.textContent = `
     .ambient{will-change:transform}
+    .ambient-a{animation:ambientFloatA 24s ease-in-out infinite alternate}
+    .ambient-b{animation:ambientFloatB 29s ease-in-out infinite alternate}
+    .ambient-c{animation:ambientFloatC 33s ease-in-out infinite alternate}
+    @keyframes ambientFloatA{0%{transform:translate3d(0,0,0) scale(1)}40%{transform:translate3d(12vw,8vh,0) scale(1.08)}75%{transform:translate3d(5vw,20vh,0) scale(.96)}100%{transform:translate3d(16vw,12vh,0) scale(1.04)}}
+    @keyframes ambientFloatB{0%{transform:translate3d(0,0,0) scale(1)}35%{transform:translate3d(-14vw,-8vh,0) scale(.94)}70%{transform:translate3d(-7vw,14vh,0) scale(1.09)}100%{transform:translate3d(-18vw,4vh,0) scale(1.02)}}
+    @keyframes ambientFloatC{0%{transform:translate3d(0,0,0) scale(1)}30%{transform:translate3d(-10vw,-14vh,0) scale(1.07)}65%{transform:translate3d(13vw,-7vh,0) scale(.95)}100%{transform:translate3d(5vw,-18vh,0) scale(1.05)}}
 
-    /* Light theme needs stronger ambient contrast because the same blurred
-       colors get washed out against the pale background. */
-    html[data-theme="light"] .ambient{
-      filter:blur(72px) saturate(135%);
-      mix-blend-mode:multiply;
-    }
-    html[data-theme="light"] .ambient-a{opacity:.30}
-    html[data-theme="light"] .ambient-b{opacity:.22}
-    html[data-theme="light"] .ambient-c{opacity:.20}
-    html[data-theme="light"] body{
-      background:
-        radial-gradient(circle at 50% -10%,rgba(90,68,220,.18),transparent 36%),
-        radial-gradient(circle at 88% 35%,rgba(36,170,210,.08),transparent 30%),
-        var(--bg);
-    }
-
-    @media (prefers-reduced-motion:no-preference){
-      .ambient-a{animation:ambientFloatA 24s ease-in-out infinite alternate}
-      .ambient-b{animation:ambientFloatB 29s ease-in-out infinite alternate}
-      .ambient-c{animation:ambientFloatC 33s ease-in-out infinite alternate}
-    }
-
-    @keyframes ambientFloatA{
-      0%{transform:translate3d(0,0,0) scale(1)}
-      40%{transform:translate3d(12vw,8vh,0) scale(1.08)}
-      75%{transform:translate3d(5vw,20vh,0) scale(.96)}
-      100%{transform:translate3d(16vw,12vh,0) scale(1.04)}
-    }
-    @keyframes ambientFloatB{
-      0%{transform:translate3d(0,0,0) scale(1)}
-      35%{transform:translate3d(-14vw,-8vh,0) scale(.94)}
-      70%{transform:translate3d(-7vw,14vh,0) scale(1.09)}
-      100%{transform:translate3d(-18vw,4vh,0) scale(1.02)}
-    }
-    @keyframes ambientFloatC{
-      0%{transform:translate3d(0,0,0) scale(1)}
-      30%{transform:translate3d(-10vw,-14vh,0) scale(1.07)}
-      65%{transform:translate3d(13vw,-7vh,0) scale(.95)}
-      100%{transform:translate3d(5vw,-18vh,0) scale(1.05)}
-    }
+    html[data-theme="light"] .ambient-a{opacity:.28;filter:blur(76px) saturate(135%);mix-blend-mode:multiply}
+    html[data-theme="light"] .ambient-b{opacity:.24;filter:blur(72px) saturate(145%);mix-blend-mode:multiply}
+    html[data-theme="light"] .ambient-c{opacity:.20;filter:blur(78px) saturate(140%);mix-blend-mode:multiply}
+    html[data-theme="light"] body{background:radial-gradient(circle at 14% 18%,rgba(125,103,255,.09),transparent 31%),radial-gradient(circle at 84% 38%,rgba(73,191,255,.08),transparent 30%),radial-gradient(circle at 46% 92%,rgba(210,105,255,.07),transparent 31%),var(--bg)}
   `;
   document.head.appendChild(style);
+
+  // Animate layout reflow when translated text changes its line count.
+  // This prevents content below a taller translated headline from jumping.
+  const layoutSelector = [
+    '.hero-description',
+    '.hero-actions .btn',
+    '.hero-meta > div',
+    '.hero-visual',
+    '.section-heading',
+    '.about-copy',
+    '.stack-grid',
+    '.timeline-item',
+    '.project-card',
+    '.education-card',
+    '.contact-card',
+    '.footer'
+  ].join(',');
+
+  let previousLayout = null;
+  let transitionToken = 0;
+  let mutationObserver = null;
+  let cleanupTimer = null;
+
+  function captureLayout() {
+    const elements = [...document.querySelectorAll(layoutSelector)];
+    previousLayout = new Map(elements.map(element => [element, element.getBoundingClientRect()]));
+  }
+
+  function animateLayout(token) {
+    if (token !== transitionToken || !previousLayout) return;
+
+    previousLayout.forEach((before, element) => {
+      if (!element.isConnected) return;
+
+      const after = element.getBoundingClientRect();
+      const deltaX = before.left - after.left;
+      const deltaY = before.top - after.top;
+
+      if (Math.abs(deltaX) < 0.5 && Math.abs(deltaY) < 0.5) return;
+
+      element.getAnimations().forEach(animation => {
+        if (animation.id === 'language-layout-shift') animation.cancel();
+      });
+
+      const animation = element.animate(
+        [
+          { transform: `translate3d(${deltaX}px, ${deltaY}px, 0)` },
+          { transform: 'translate3d(0, 0, 0)' }
+        ],
+        {
+          duration: 460,
+          easing: 'cubic-bezier(.2,.75,.2,1)',
+          fill: 'both'
+        }
+      );
+      animation.id = 'language-layout-shift';
+      animation.finished.finally(() => animation.cancel()).catch(() => {});
+    });
+
+    previousLayout = null;
+  }
+
+  document.querySelectorAll('.language-btn').forEach(button => {
+    button.addEventListener('click', () => {
+      const token = ++transitionToken;
+      captureLayout();
+
+      mutationObserver?.disconnect();
+      clearTimeout(cleanupTimer);
+
+      // applyLanguage() mutates all translated text in one JS task.
+      // MutationObserver runs after those mutations but before the next paint,
+      // which lets us invert the layout shift before the user sees it.
+      mutationObserver = new MutationObserver(mutations => {
+        const textChanged = mutations.some(mutation =>
+          mutation.type === 'childList' || mutation.type === 'characterData'
+        );
+        if (!textChanged || token !== transitionToken) return;
+
+        mutationObserver.disconnect();
+        animateLayout(token);
+      });
+
+      mutationObserver.observe(document.body, {
+        subtree: true,
+        childList: true,
+        characterData: true
+      });
+
+      cleanupTimer = setTimeout(() => {
+        mutationObserver?.disconnect();
+        if (token === transitionToken) previousLayout = null;
+      }, 900);
+    }, { capture: true });
+  });
 })();
