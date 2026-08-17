@@ -49,10 +49,12 @@
         backdrop-filter:none!important;
       }
       .nav-links.open{
-        background:rgba(8,10,18,.10)!important;
+        background:transparent!important;
+        border:0!important;
+        outline:0!important;
         -webkit-backdrop-filter:none!important;
         backdrop-filter:none!important;
-        box-shadow:inset 0 1px 0 rgba(255,255,255,.06)!important;
+        box-shadow:none!important;
       }
       .mobile-nav-frost{
         display:block;
@@ -73,7 +75,9 @@
       .mobile-nav-frost.is-open{opacity:1}
 
       html[data-theme="light"] .nav-links.open{
-        background:rgba(255,255,255,.08)!important;
+        background:transparent!important;
+        border:0!important;
+        box-shadow:none!important;
       }
       html[data-theme="light"] .mobile-nav-frost{
         background:linear-gradient(145deg,rgba(255,255,255,.54),rgba(233,238,249,.30));
