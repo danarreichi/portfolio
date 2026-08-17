@@ -4,6 +4,7 @@
   uiStyle.textContent = `
     .role-head{align-items:flex-start}
     .current-badge{align-self:flex-start;white-space:nowrap;line-height:1.2}
+    .mobile-nav-frost{display:none}
 
     @media(max-width:760px){
       .menu-btn{
@@ -38,9 +39,92 @@
       .menu-btn[aria-expanded="true"] span:last-child{
         transform:translate(-50%,0) rotate(-45deg);
       }
+
+      /* The mobile menu is nested inside the frosted navbar. Nested backdrop
+         filters cannot reliably sample the page behind the parent on Chrome.
+         The actual blur therefore lives on a separate fixed layer appended
+         directly to <body>, underneath the menu but above page content. */
+      .nav-shell:has(.nav-links.open){
+        -webkit-backdrop-filter:none!important;
+        backdrop-filter:none!important;
+      }
+      .nav-links.open{
+        background:rgba(8,10,18,.10)!important;
+        -webkit-backdrop-filter:none!important;
+        backdrop-filter:none!important;
+        box-shadow:inset 0 1px 0 rgba(255,255,255,.06)!important;
+      }
+      .mobile-nav-frost{
+        display:block;
+        position:fixed;
+        z-index:39;
+        pointer-events:none;
+        opacity:0;
+        border-radius:24px;
+        overflow:hidden;
+        background:linear-gradient(145deg,rgba(26,29,48,.46),rgba(8,10,19,.28));
+        border:1px solid rgba(255,255,255,.14);
+        box-shadow:0 26px 80px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.08);
+        -webkit-backdrop-filter:blur(32px) saturate(175%);
+        backdrop-filter:blur(32px) saturate(175%);
+        transition:opacity .16s ease;
+        will-change:left,top,width,height,opacity;
+      }
+      .mobile-nav-frost.is-open{opacity:1}
+
+      html[data-theme="light"] .nav-links.open{
+        background:rgba(255,255,255,.08)!important;
+      }
+      html[data-theme="light"] .mobile-nav-frost{
+        background:linear-gradient(145deg,rgba(255,255,255,.54),rgba(233,238,249,.30));
+        border-color:rgba(35,45,70,.12);
+        box-shadow:0 26px 80px rgba(65,76,112,.18),inset 0 1px 0 rgba(255,255,255,.72);
+        -webkit-backdrop-filter:blur(32px) saturate(165%);
+        backdrop-filter:blur(32px) saturate(165%);
+      }
     }
   `;
   document.head.appendChild(uiStyle);
+
+  // Dedicated backdrop layer for the expanded mobile navigation.
+  const mobileNav = document.getElementById('navLinks');
+  const mobileMenuBtn = document.getElementById('menuBtn');
+  if (mobileNav && mobileMenuBtn) {
+    const frost = document.createElement('div');
+    frost.className = 'mobile-nav-frost';
+    frost.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(frost);
+
+    let frostFrame = 0;
+    const syncMobileNavFrost = () => {
+      cancelAnimationFrame(frostFrame);
+      frostFrame = requestAnimationFrame(() => {
+        const isMobile = window.matchMedia('(max-width:760px)').matches;
+        const isOpen = mobileNav.classList.contains('open');
+        if (!isMobile || !isOpen) {
+          frost.classList.remove('is-open');
+          return;
+        }
+
+        const rect = mobileNav.getBoundingClientRect();
+        frost.style.left = `${rect.left}px`;
+        frost.style.top = `${rect.top}px`;
+        frost.style.width = `${rect.width}px`;
+        frost.style.height = `${rect.height}px`;
+        frost.style.borderRadius = getComputedStyle(mobileNav).borderRadius || '24px';
+        frost.classList.add('is-open');
+      });
+    };
+
+    const navClassObserver = new MutationObserver(syncMobileNavFrost);
+    navClassObserver.observe(mobileNav, { attributes: true, attributeFilter: ['class'] });
+    mobileMenuBtn.addEventListener('click', syncMobileNavFrost);
+    mobileNav.addEventListener('click', event => {
+      if (event.target.closest('a')) syncMobileNavFrost();
+    });
+    window.addEventListener('resize', syncMobileNavFrost, { passive: true });
+    window.addEventListener('orientationchange', syncMobileNavFrost, { passive: true });
+  }
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reducedMotion) return;
