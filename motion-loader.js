@@ -4,6 +4,41 @@
   uiStyle.textContent = `
     .role-head{align-items:flex-start}
     .current-badge{align-self:flex-start;white-space:nowrap;line-height:1.2}
+
+    @media(max-width:760px){
+      .menu-btn{
+        position:relative;
+        display:block;
+        flex:0 0 44px;
+        width:44px;
+        height:44px;
+      }
+      .menu-btn span{
+        position:absolute;
+        left:50%;
+        top:50%;
+        display:block;
+        width:18px;
+        height:1.5px;
+        margin:0!important;
+        border-radius:999px;
+        background:currentColor;
+        transform-origin:center;
+        transition:transform .22s cubic-bezier(.2,.75,.2,1),opacity .18s ease;
+      }
+      .menu-btn span:first-child{
+        transform:translate(-50%,-4px);
+      }
+      .menu-btn span:last-child{
+        transform:translate(-50%,4px);
+      }
+      .menu-btn[aria-expanded="true"] span:first-child{
+        transform:translate(-50%,0) rotate(45deg);
+      }
+      .menu-btn[aria-expanded="true"] span:last-child{
+        transform:translate(-50%,0) rotate(-45deg);
+      }
+    }
   `;
   document.head.appendChild(uiStyle);
 
