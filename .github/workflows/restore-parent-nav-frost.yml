@@ -1,0 +1,38 @@
+name: Restore parent navbar frost
+
+on:
+  push:
+    paths:
+      - .github/workflows/restore-parent-nav-frost.yml
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Keep parent navbar frosted when mobile menu opens
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('motion-loader.js')
+          s = p.read_text()
+          old = '''      .nav-shell:has(.nav-links.open){
+        -webkit-backdrop-filter:none!important;
+        backdrop-filter:none!important;
+      }
+'''
+          if old not in s:
+              raise SystemExit('Parent navbar blur-disable rule not found')
+          s = s.replace(old, '', 1)
+          p.write_text(s)
+          PY
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add motion-loader.js
+          git commit -m "Keep parent navbar frosted with mobile menu open"
+          git push
