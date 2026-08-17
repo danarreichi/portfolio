@@ -19,31 +19,13 @@ jobs:
           from pathlib import Path
           p = Path('motion-loader.js')
           s = p.read_text()
-          old = '''      .nav-links.open{
-        background:rgba(8,10,18,.10)!important;
-        -webkit-backdrop-filter:none!important;
-        backdrop-filter:none!important;
-        box-shadow:inset 0 1px 0 rgba(255,255,255,.06)!important;
-      }'''
-          new = '''      .nav-links.open{
-        background:transparent!important;
-        border:0!important;
-        outline:0!important;
-        -webkit-backdrop-filter:none!important;
-        backdrop-filter:none!important;
-        box-shadow:none!important;
-      }'''
+          old = "      .nav-links.open{\n        background:rgba(8,10,18,.10)!important;\n        -webkit-backdrop-filter:none!important;\n        backdrop-filter:none!important;\n        box-shadow:inset 0 1px 0 rgba(255,255,255,.06)!important;\n      }"
+          new = "      .nav-links.open{\n        background:transparent!important;\n        border:0!important;\n        outline:0!important;\n        -webkit-backdrop-filter:none!important;\n        backdrop-filter:none!important;\n        box-shadow:none!important;\n      }"
           if old not in s:
               raise SystemExit('Dark mobile nav block not found')
           s = s.replace(old, new, 1)
-          old_light = '''      html[data-theme="light"] .nav-links.open{
-        background:rgba(255,255,255,.08)!important;
-      }'''
-          new_light = '''      html[data-theme="light"] .nav-links.open{
-        background:transparent!important;
-        border:0!important;
-        box-shadow:none!important;
-      }'''
+          old_light = "      html[data-theme=\"light\"] .nav-links.open{\n        background:rgba(255,255,255,.08)!important;\n      }"
+          new_light = "      html[data-theme=\"light\"] .nav-links.open{\n        background:transparent!important;\n        border:0!important;\n        box-shadow:none!important;\n      }"
           if old_light not in s:
               raise SystemExit('Light mobile nav block not found')
           s = s.replace(old_light, new_light, 1)
