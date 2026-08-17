@@ -1,4 +1,12 @@
 (() => {
+  // Small UI fixes that should apply regardless of motion preferences.
+  const uiStyle = document.createElement('style');
+  uiStyle.textContent = `
+    .role-head{align-items:flex-start}
+    .current-badge{align-self:flex-start;white-space:nowrap;line-height:1.2}
+  `;
+  document.head.appendChild(uiStyle);
+
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reducedMotion) return;
 
