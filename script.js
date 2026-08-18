@@ -139,12 +139,30 @@ function renderProjectDialog(){
     return `<section class="project-detail-block${empty?' is-empty':''}"><p class="project-detail-label">${labels[key]}</p><div class="project-detail-value">${content}</div></section>`;
   }).join('');
 }
+let dialogScrollY=0;
+function setDialogScrollLock(locked){
+  if(locked){
+    dialogScrollY=window.scrollY;
+    document.body.style.setProperty('--dialog-scroll-top',`-${dialogScrollY}px`);
+    root.classList.add('dialog-open');
+    document.body.classList.add('dialog-open');
+    return;
+  }
+
+  root.classList.remove('dialog-open');
+  document.body.classList.remove('dialog-open');
+  document.body.style.removeProperty('--dialog-scroll-top');
+  const scrollBehavior=root.style.scrollBehavior;
+  root.style.scrollBehavior='auto';
+  document.scrollingElement.scrollTop=dialogScrollY;
+  root.style.scrollBehavior=scrollBehavior;
+}
 function openProjectDialog(key){
   if(!projectDialog||!projectDetails[key])return;
   currentProjectKey=key;
   renderProjectDialog();
   projectDialog.classList.remove('is-closing');
-  if(!projectDialog.open)projectDialog.showModal();
+  if(!projectDialog.open){setDialogScrollLock(true);projectDialog.showModal()}
   if(customCursor&&customCursor.parentElement!==projectDialog)projectDialog.append(customCursor);
   if(lastPointerPosition)syncCustomCursorPosition(lastPointerPosition.x,lastPointerPosition.y);
 }
@@ -154,6 +172,7 @@ function closeProjectDialog(){
   projectDialog.addEventListener('animationend',()=>{
     projectDialog.classList.remove('is-closing');
     projectDialog.close();
+    setDialogScrollLock(false);
     if(customCursor&&customCursorParent)customCursorParent.insertBefore(customCursor,customCursorNextSibling);
     if(lastPointerPosition)syncCustomCursorPosition(lastPointerPosition.x,lastPointerPosition.y);
     currentProjectKey='';

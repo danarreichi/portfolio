@@ -45,6 +45,19 @@ body {
   transition: .35s background, .35s color
 }
 
+html.dialog-open,
+body.dialog-open {
+  overflow: hidden
+}
+
+body.dialog-open {
+  position: fixed;
+  top: var(--dialog-scroll-top);
+  right: 0;
+  left: 0;
+  width: 100%
+}
+
 a {
   color: inherit;
   text-decoration: none
