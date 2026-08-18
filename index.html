@@ -313,7 +313,7 @@
       </div>
 
       <div class="project-grid">
-        <article class="glass project-card featured github-project reveal">
+        <article class="glass project-card featured github-project reveal" data-project="custom-query-builder" tabindex="0" role="button" aria-haspopup="dialog">
           <div class="project-number">01</div>
           <div class="project-body">
             <div class="project-tags"><span>Open Source</span><span>PHP</span><span>CodeIgniter 3</span><span>MySQL / SQLite</span></div>
@@ -334,49 +334,49 @@
           </div>
         </article>
 
-        <article class="glass project-card reveal">
+        <article class="glass project-card reveal" data-project="pos-system" tabindex="0" role="button" aria-haspopup="dialog">
           <div class="project-number">02</div>
           <div class="project-tags"><span>Laravel 10</span><span>MySQL</span><span>REST API</span></div>
           <h3>POS System</h3>
           <p data-i18n="projects.pos">A point-of-sale system for sales and inventory management, built to monitor stock and track inventory history efficiently.</p>
         </article>
 
-        <article class="glass project-card reveal">
+        <article class="glass project-card reveal" data-project="library-dashboard" tabindex="0" role="button" aria-haspopup="dialog">
           <div class="project-number">03</div>
           <div class="project-tags"><span>Laravel 10</span><span>Oracle</span></div>
           <h3 data-i18n="projects.libraryTitle">Campus Library Visitor Dashboard</h3>
           <p data-i18n="projects.library">Flexible dashboard showing visitor percentages across study programs, lecturers, staff, and external guests.</p>
         </article>
 
-        <article class="glass project-card reveal">
+        <article class="glass project-card reveal" data-project="realtime-chat" tabindex="0" role="button" aria-haspopup="dialog">
           <div class="project-number">04</div>
           <div class="project-tags"><span>Ruby on Rails</span><span>WebSocket</span></div>
           <h3>Realtime Chat App</h3>
           <p data-i18n="projects.chat">Room-based real-time messaging application implemented with WebSocket and MySQL.</p>
         </article>
 
-        <article class="glass project-card reveal">
+        <article class="glass project-card reveal" data-project="investment-monitoring" tabindex="0" role="button" aria-haspopup="dialog">
           <div class="project-number">05</div>
           <div class="project-tags"><span>Django</span><span>AJAX</span><span>MySQL</span></div>
           <h3 data-i18n="projects.investmentTitle">Investment Monitoring & Evaluation</h3>
           <p data-i18n="projects.investment">Tracks target versus realization using the Hanumm Curve / S-Curve method, with investment data refreshed every five seconds.</p>
         </article>
 
-        <article class="glass project-card reveal">
+        <article class="glass project-card reveal" data-project="employee-recruitment" tabindex="0" role="button" aria-haspopup="dialog">
           <div class="project-number">06</div>
           <div class="project-tags"><span>Node.js</span><span>AHP</span><span>MySQL</span></div>
           <h3 data-i18n="projects.employeeTitle">Employee Recruitment DSS</h3>
           <p data-i18n="projects.employee">A decision-support system that ranks recruitment recommendations based on selected HR criteria.</p>
         </article>
 
-        <article class="glass project-card reveal">
+        <article class="glass project-card reveal" data-project="guesthouse-booking" tabindex="0" role="button" aria-haspopup="dialog">
           <div class="project-number">07</div>
           <div class="project-tags"><span>Laravel</span><span>MySQL</span></div>
           <h3 data-i18n="projects.guesthouseTitle">Guesthouse Booking System</h3>
           <p data-i18n="projects.guesthouse">Room availability, booking, and post-stay review workflow built with Laravel and MySQL.</p>
         </article>
 
-        <article class="glass project-card reveal">
+        <article class="glass project-card reveal" data-project="laptop-purchase" tabindex="0" role="button" aria-haspopup="dialog">
           <div class="project-number">08</div>
           <div class="project-tags"><span>PHP</span><span>AHP + SAW</span><span>MySQL</span></div>
           <h3 data-i18n="projects.laptopTitle">Laptop Purchase DSS</h3>
@@ -422,10 +422,25 @@
     </section>
   </main>
 
+  <dialog class="project-dialog" id="projectDialog" aria-labelledby="projectDialogTitle" aria-describedby="projectDialogSummary">
+    <div class="project-dialog-shell">
+      <button class="project-dialog-close" id="projectDialogClose" type="button" aria-label="Close project details">&times;</button>
+      <div class="project-dialog-topline">
+        <p class="project-dialog-kicker" id="projectDialogKicker">Project detail</p>
+        <span class="project-dialog-number" id="projectDialogNumber"></span>
+      </div>
+      <h2 id="projectDialogTitle"></h2>
+      <div class="project-dialog-stack" id="projectDialogStack" aria-label="Tech Stack"></div>
+      <p class="project-dialog-summary" id="projectDialogSummary"></p>
+      <div class="project-detail-grid" id="projectDialogDetails"></div>
+    </div>
+  </dialog>
+
   <footer class="footer">
     <span>© <span id="year"></span> Djatu Hamidan Ardiwinanto</span>
   </footer>
 
-  <script src="script.js?v=20260818-1517"></script>
+  <script src="script.js?v=20260818-1518"></script>
+  <script src="motion-loader.js?v=20260818-1518"></script>
 </body>
 </html>
