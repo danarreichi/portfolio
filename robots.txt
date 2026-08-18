@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://danardi.my.id/sitemap.xml
