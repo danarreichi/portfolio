@@ -1678,11 +1678,6 @@ html[data-theme="light"] .language-divider {
   background: rgba(255, 255, 255, .045)
 }
 
-.project-detail-block.is-empty .project-detail-value {
-  min-height: 1.4em;
-  opacity: .2
-}
-
 .project-detail-label {
   margin: 0;
   color: var(--faint);
